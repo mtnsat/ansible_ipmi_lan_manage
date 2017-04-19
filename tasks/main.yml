@@ -42,6 +42,7 @@
   become: no
   copy:
     content: |
+      ---
       # {{ ansible_hostname }} at {{ inventory_hostname }} {{ ansible_ssh_host if ansible_ssh_host is defined else '' }}
       ipmi:
         vlan: {% if ansible_local.ipmi.lan_1.qvlanid == "Disabled" %}0
@@ -50,8 +51,8 @@
         address: {{ ansible_local.ipmi.lan_1.ipaddress }}
         address_source: StaticAddress
         netmask: {{ ansible_local.ipmi.lan_1.subnetmask }}
-        gw: {{ ansible_local.ipmi.lan_1.defaultgatewayip }}\n
-    dest: ./host_vars/{{ inventory_hostname_short }}/ipmi
+        gw: {{ ansible_local.ipmi.lan_1.defaultgatewayip }}
+    dest: ./host_vars/{{ inventory_hostname_short }}/ipmi.yml
   when: get_ipmi
 
 ## only if set_ipmi == True and ipmi host_var exists
